@@ -6,12 +6,12 @@ It's the final project for the CAIXAVERSO Quarkus Avançado do Prof. Matheus
 
 ### Postgres container
 ```
-In the integrated terminal, being in the root folder:
+In the integrated terminal, being in the project's root folder:
 docker compose -f ./postgres/docker-compose.yml up -d
 ```
 ### Kafka container
 ```
-In the integrated terminal, being in the root folder::
+In the integrated terminal, being in the project's root folder:
 docker compose -f ./kafka/docker-compose.yml up -d
 ```
 
