@@ -1,0 +1,19 @@
+services:
+  db:
+    container_name: postgres-quarkus
+    image: postgres:17.0-alpine3.20
+    volumes:
+      - ./postgresql/pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: db-quarkus
+    networks:
+      - api_bridge
+
+networks:
+  api_bridge:
+    driver: bridge
