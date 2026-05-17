@@ -14,7 +14,11 @@ docker compose -f ./postgres/docker-compose.yml up -d
 In the integrated terminal, being in the project's root folder:
 docker compose -f ./kafka/docker-compose.yml up -d
 ```
-
+### Generate keys
+```
+openssl genrsa -out privateKey.pem 2048
+openssl rsa -pubout -in privateKey.pem -out publicKey.pem
+```
 ### Running the application in dev mode
 ```shell script
 ./mvnw quarkus:dev
