@@ -1,5 +1,12 @@
 package org.acme.project.resource;
 
+import java.util.List;
+import java.util.Map;
+
+import org.acme.project.model.Produto;
+import org.acme.project.repository.ProdutoRepository;
+import org.acme.project.service.EstoqueBaixoPublisher;
+
 import io.quarkus.cache.CacheInvalidate;
 import io.quarkus.cache.CacheInvalidateAll;
 import io.quarkus.cache.CacheResult;
@@ -8,14 +15,16 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ConstraintViolationException;
-import jakarta.ws.rs.*;
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.util.List;
-import java.util.Map;
-import org.acme.project.model.Produto;
-import org.acme.project.repository.ProdutoRepository;
-import org.acme.project.service.EstoqueBaixoPublisher;
 
 @Path("/produtos")
 @Produces(MediaType.APPLICATION_JSON)
@@ -55,7 +64,7 @@ public class ProdutoResource {
     @PUT
     @Transactional
     @Path("/{id}")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN"})
     @CacheInvalidateAll(cacheName = CACHE_NAME)
     public Response atualizarProduto(@PathParam("id") Long id, Produto produto) {
         Produto produtoExistente = produtoRepository.findById(id);
@@ -82,7 +91,7 @@ public class ProdutoResource {
     @DELETE
     @Transactional
     @Path("/{id}")
-    @RolesAllowed("ADMIN")
+    @RolesAllowed({"ADMIN"})
     @CacheInvalidate(cacheName = CACHE_NAME)
     @CacheInvalidateAll(cacheName = CACHE_NAME)
     public Response deletarProduto(@PathParam("id") Long id) {

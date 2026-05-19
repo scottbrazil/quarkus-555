@@ -1,12 +1,18 @@
 package org.acme.project.model;
 
+import java.util.List;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.acme.project.enums.RoleEnum;
 
 @Entity
 @Table(name = "usuario")
@@ -24,6 +30,6 @@ public class Usuario extends PanacheEntityBase {
     private String email;
     @Column(length = 150, nullable = false)
     private String senha;
-    @Enumerated(EnumType.STRING)
-    private RoleEnum role;
+    @Column(name = "role")
+    private List<String> role;
 }

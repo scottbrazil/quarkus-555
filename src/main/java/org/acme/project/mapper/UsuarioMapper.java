@@ -1,8 +1,11 @@
 package org.acme.project.mapper;
 
+import java.util.Arrays;
+
 import org.acme.project.dto.UsuarioDTO;
-import org.acme.project.enums.RoleEnum;
 import org.acme.project.model.Usuario;
+
+import io.quarkus.elytron.security.common.BcryptUtil;
 
 public class UsuarioMapper {
     public static UsuarioDTO toDTO(Usuario usuario) {
@@ -13,8 +16,8 @@ public class UsuarioMapper {
         dto.setId(usuario.getId());
         dto.setNome(usuario.getNome());
         dto.setEmail(usuario.getEmail());
-        dto.setSenha(usuario.getSenha());
-        dto.setRole(usuario.getRole() != null ? usuario.getRole() : null);
+        dto.setSenha(BcryptUtil.bcryptHash(usuario.getSenha()));
+        dto.setRole(usuario.getRole());
         return dto;
     }
 
@@ -26,12 +29,8 @@ public class UsuarioMapper {
         usuario.setId(dto.getId());
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
-        usuario.setSenha(dto.getSenha());
-        try {
-            usuario.setRole(dto.getRole() != null ? RoleEnum.valueOf(dto.getRole().name()) : RoleEnum.USER);
-        } catch (IllegalArgumentException e) {
-            usuario.setRole(RoleEnum.USER);
-        }
+        usuario.setSenha(BcryptUtil.bcryptHash(dto.getSenha()));
+        usuario.setRole(dto.getRole() != null ? dto.getRole() : Arrays.asList("USER"));
         return usuario;
     }
 }
