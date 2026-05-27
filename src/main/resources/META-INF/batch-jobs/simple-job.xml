@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="simple-job" xmlns="https://jakarta.ee/xml/ns/jakartaee" version="3.0">
+    <step id="step1">
+        <batchlet ref="simpleBatchlet">
+            <properties>
+                <property name="message" value="#{jobParameters['customMessage']}"/>
+            </properties>
+        </batchlet>
+    </step>
+</job>
